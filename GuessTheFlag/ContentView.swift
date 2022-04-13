@@ -35,6 +35,8 @@ struct ContentView: View {
                             Image(countries[number])
                                 .resizable()
                                 .frame(width: 200, height: 150)
+                                .clipShape(Capsule())
+                                .shadow(radius: 5)
                         }
                     }
                 }
