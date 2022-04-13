@@ -20,28 +20,46 @@ struct ContentView: View {
                     .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
                     .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
                 ], center: .top, startRadius: 400, endRadius: 600)
-                    .ignoresSafeArea()
-                VStack(spacing: 30){
-                    VStack {
-                        Text("Tap the flag of")
-                            .foregroundColor(.white)
-                            .font(.subheadline.weight(.heavy))
-                        Text(countries[correctAnswer])
-                            .foregroundColor(.white)
-                            .font(.largeTitle.weight(.semibold))
-                    }
-                    
-                    ForEach(0..<3) { number in
-                        Button {
-                            flagTapped(number)
-                        } label: {
-                            Image(countries[number])
-                                .resizable()
-                                .frame(width: 200, height: 150)
-                                .clipShape(Capsule())
-                                .shadow(radius: 5)
+                .ignoresSafeArea()
+                VStack {
+                    Spacer()
+                    Text("Guess the Flag")
+                        .font(.largeTitle.weight(.bold))
+                        .foregroundColor(.white)
+                    VStack(spacing: 15){
+                        VStack {
+                            Text("Tap the flag of")
+                                .foregroundStyle(.secondary)
+                                .font(.body.weight(.heavy))
+                            Text(countries[correctAnswer])
+                                .foregroundColor(.white)
+                                .font(.largeTitle.weight(.semibold))
+                        }
+                        
+                        ForEach(0..<3) { number in
+                            Button {
+                                flagTapped(number)
+                            } label: {
+                                Image(countries[number])
+                                    .resizable()
+                                    .frame(width:150, height: 100)
+                                    .clipShape(Capsule())
+                                    .shadow(radius: 5)
+                            }
                         }
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 20)
+                    .background(.thinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    
+                    Spacer()
+                    
+                    Text("Score: \(score)")
+                        .foregroundColor(.white)
+                        .font(.title.bold())
+                    
+                    Spacer()
                 }
             }
             .alert(scoreTitle, isPresented: $showingScore) {
@@ -59,7 +77,7 @@ struct ContentView: View {
         } else {
             scoreTitle = "Wrong"
         }
-
+        
         showingScore = true
     }
     func askQuestion() {
